@@ -4,7 +4,7 @@ SRC_DIR       = ../src
 IM_CLIENT_DIR = $(SRC_DIR)/im-client
 
 .SUFFIXES:	.kbmsrc .kbm .cin .gtab
-CFLAGS= -DUNIX=1 $(WALL) $(OPTFLAGS) $(GTKINC) -I$(SRC_DIR)
+CFLAGS+= -DUNIX=1 $(WALL) $(OPTFLAGS) $(GTKINC) -I$(SRC_DIR)
 export HIME_NO_RELOAD=
 
 DATA=pho.tab2 tsin32.idx gtab.list \
@@ -83,11 +83,11 @@ pin-juyin.xlt: $(PIN_JUYIN) pin-juyin.src
 
 extr1:	extr1.c
 	@echo "building $@ ..."
-	@$(CC) $(CFLAGS) $< $(SRC_DIR)/util.o $(SRC_DIR)/locale.o -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $< $(SRC_DIR)/util.o $(SRC_DIR)/locale.o -o $@ $(LDFLAGS)
 
 t2s-file:	t2s-file.c
 	@echo "building $@ ..."
-	@$(CC) $(CFLAGS) $< $(SRC_DIR)/util.o $(SRC_DIR)/locale.o -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) $< $(SRC_DIR)/util.o $(SRC_DIR)/locale.o -o $@ $(LDFLAGS)
 
 tsin-1.src:	extr1
 	./extr1 > $@
@@ -108,9 +108,9 @@ gtab.list: $(REMOVE_TSIN)
 	touch gtab.list
 
 install:
-	install -d $(HIME_TABLE_DIR_i)
-	install -m 644 $(DATA) $(DATAKEEP) $(HIME_TABLE_DIR_i)
-#	cd $(HIME_TABLE_DIR_i); bzip2 -f *.gtab
+	install -d "$(HIME_TABLE_DIR_i)"
+	install -m 644 $(DATA) $(DATAKEEP) "$(HIME_TABLE_DIR_i)"
+#	cd "$(HIME_TABLE_DIR_i)"; bzip2 -f *.gtab
 
 clean:
 	@echo "clean up"
